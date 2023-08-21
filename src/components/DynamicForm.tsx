@@ -34,21 +34,31 @@ const DynamicForm = () => {
     const contactPreference = watch("contactPreference");
     const phoneNum = watch("phoneNum");
     const country = watch ("country");
-    const getCountryCode = () =>{
-        switch(country){
-            case "USA": return "+88";
-            case "Bangladesh": return "+1";
-            case "": return "";
-        }
-    }
+
     
-    const {fields, append, remove} = useFieldArray({
+  
+    const {
+        fields: phoneFields,
+        append: appendPhone,
+        remove: removePhone,
+      } = useFieldArray({
         name: "phoneNum",
-        control
-    })
+        control,
+      });
+    
+      const {
+        fields: emailFields,
+        append: appendEmail,
+        remove: removeEmail,
+      } = useFieldArray({
+        name: "emailadd",
+        control,
+      });
+
     const onSubmit = (data: formData) => {
     console.log(data);
   };
+
   
   return (
     <div className='border p-6 mt-6 rounded-lg w-[600px]'>
@@ -56,11 +66,31 @@ const DynamicForm = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col mb-2'>
             <label className='font-semibold' htmlFor="fullName">Full Name:</label>
-            <input type="text" id="fullName" {...register('fullName')}  className='border rounded-lg p-2'/>
+            <input type="text" id="fullName" {...register('fullName', {required:{value:true, message: "Full name is required"},validate:{
+                noAdmin:(fieldValue)=>{
+               return fieldValue!=="Purnoy"|| "This name is not Allowed"
+            },
+            notNumber:(fieldValue)=>{
+                return Number(fieldValue)!==Number(fieldValue) || "Name Can not be a Number";
+            }
+            }})}  className='border rounded-lg p-2'/>
+            <p className='text-red-700'>{errors.fullName?.message}</p>
         </div>
         <div className='flex flex-col mb-2'>
             <label className='font-semibold' htmlFor="email">Email Address:</label>
-            <input type="email" id="email" {...register('email')} className='border rounded-lg p-2' />
+            <input type="email" id="email" {...register('email',{pattern:{
+                value:  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                message:"Invalid Email Format"},
+                validate:{
+                    noAdminEmail: (fieldValue)=>{
+                        return fieldValue!=="purnoy.xyz@gmail.com" || "This Email is not Allowed"
+                    },
+                    blackListed:(fieldValue)=>{
+                        return !fieldValue.endsWith("gmail.com") || "This domain is not allowed"
+                    }
+                }
+                })} className='border rounded-lg p-2' />
+            <p className='text-red-700'>{errors.email?.message}</p>
         </div>
         <div className='flex flex-col mb-2'>
             <label className='font-semibold'> Contact Preference:</label>
@@ -88,20 +118,20 @@ const DynamicForm = () => {
                      <label className='font-semibold' htmlFor="emailadd">Email:</label>
                      <div className="">
                         {
-                            fields.map((field, index)=>{
+                            emailFields.map((field, index)=>{
                                 return(
                                     <div className="flex gap-x-6" key={field.id}>
                                         <input className='border rounded-lg p-2 mb-2' type="email" id="emailadd" {...register(`emailadd.${index}.exEmail`)} />
                                         {
                                             index>0 &&(
-                                                <button className='bg-blue-500 mt-2 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>remove(index)}>Remove Email</button>
+                                                <button className='bg-blue-500 mt-2 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>removeEmail(index)}>Remove Email</button>
                                             )
                                         }
                                     </div>
                                 )
                             })
                         }
-                         <button className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>append({number:""})}>Add Extra Email</button>
+                         <button className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>appendEmail({exEmail:""})}>Add Extra Email</button>
                      </div>
                 </div>
             )
@@ -112,20 +142,20 @@ const DynamicForm = () => {
                      <label className='font-semibold' htmlFor="phoneNum">Phone:</label>
                      <div className="">
                         {
-                            fields.map((field, index)=>{
+                            phoneFields.map((field, index)=>{
                                 return(
                                     <div className=" flex gap-x-6" key={field.id}>
                                         <input className='border rounded-lg p-2 mb-2' type="number" id="phoneNum" {...register(`phoneNum.${index}.number` as const)} />
                                         {
                                             index>0 &&(
-                                                <button className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>remove(index)}>Remove</button>
+                                                <button className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>removePhone(index)}>Remove</button>
                                             )
                                         }
                                     </div>
                                 )
                             })
                         }
-                        <button className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg' type='button' onClick={()=>append({number:""})}> Add Extra Phone</button>
+                        <button className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg' type='button' onClick={()=>appendPhone({number:""})}> Add Extra Phone</button>
                      </div>
                 </div>
             )
@@ -161,16 +191,7 @@ const DynamicForm = () => {
                 <option value="Bangladesh">Bangladesh</option>
             </select>
         </div>
-        {
-            country =="USA" && (
-                getCountryCode()
-            )
-        }
-         {
-            country =="Bangladesh" && (
-                getCountryCode()
-            )
-        }
+     
         <button type="submit" className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg'>Submit</button>
       </form>
     </div>
