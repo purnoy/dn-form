@@ -63,7 +63,7 @@ const DynamicForm = () => {
   return (
     <div className='border p-6 mt-6 rounded-lg w-[600px]'>
         <h1 className='text-center mb-4 font-bold'>Dynamic Form</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className='flex flex-col mb-2'>
             <label className='font-semibold' htmlFor="fullName">Full Name:</label>
             <input type="text" id="fullName" {...register('fullName', {required:{value:true, message: "Full name is required"},validate:{
@@ -121,17 +121,32 @@ const DynamicForm = () => {
                             emailFields.map((field, index)=>{
                                 return(
                                     <div className="flex gap-x-6" key={field.id}>
-                                        <input className='border rounded-lg p-2 mb-2' type="email" id="emailadd" {...register(`emailadd.${index}.exEmail`)} />
+                                        <input className='border rounded-lg p-2 mb-2' type="email" id="emailadd" {...register(`emailadd.${index}.exEmail`, {pattern:{
+                                        value:  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                                        message:"Invalid Email Format"
+                                    },
+                                        validate:{
+                                            noAdminEmail: (fieldValue)=>{
+                                                return fieldValue!=="purnoy@xyz.com" || "This Email is not Allowed"
+                                            },
+                                            blackListed:(fieldValue)=>{
+                                                return !fieldValue.endsWith("gmail.com") || "This domain is not allowed"
+                                            }
+                                        }
+                                        })} />
+                                        
                                         {
                                             index>0 &&(
                                                 <button className='bg-blue-500 mt-2 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>removeEmail(index)}>Remove Email</button>
                                             )
                                         }
+                                        <p className='text-red-700'>{errors.email?.message}</p>
                                     </div>
                                 )
                             })
                         }
                          <button className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>appendEmail({exEmail:""})}>Add Extra Email</button>
+                         
                      </div>
                 </div>
             )
@@ -198,4 +213,4 @@ const DynamicForm = () => {
   )
 }
 
-export default DynamicForm
+export default DynamicForm;
