@@ -74,13 +74,7 @@ const DynamicForm = () => {
             },
             notNumber:(fieldValue)=>{
                 return Number(fieldValue)!==Number(fieldValue) || "Name Can not be a Number";
-            },
-              nameTaken: fieldValue =>{
-                        const userExist = usernameList.map(list=>{
-                            return list === fieldValue;
-                        })
-                        if(userExist) return "This user name is already Taken";
-                    }
+            }
             }})}  className='border rounded-lg p-2'/>
             <p className='text-red-700'>{errors.fullName?.message}</p>
         </div>
