@@ -63,7 +63,7 @@ const DynamicForm = () => {
 
   
   return (
-    <div className='border p-6 mt-6 rounded-lg w-[600px]'>
+    <div className='border p-6 mt-6 rounded-lg w-[600px] bg-yellow-200'>
         <h1 className='text-center mb-4 font-bold'>Dynamic Form</h1>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className='flex flex-col mb-2'>
