@@ -20,7 +20,7 @@ interface formData {
     
 }
 
-const validationSchema = Yup .object().shape<ResolverOptions<formData>>({
+const validationSchema = Yup .object().shape({
     fullName: Yup.string().required("Fullname is Required"),
     email: Yup.string()
     .matches(
