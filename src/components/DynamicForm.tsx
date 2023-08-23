@@ -18,7 +18,7 @@ interface formData {
 }
 
 const DynamicForm = () => {
-    const { register, handleSubmit, watch, formState:{errors}, setValue, control } = useForm<formData>({
+    const { register, handleSubmit, watch, formState:{errors}, control } = useForm<formData>({
         defaultValues:{
             fullName: "",
             email: "",
@@ -162,7 +162,9 @@ const DynamicForm = () => {
                             phoneFields.map((field, index)=>{
                                 return(
                                     <div className=" flex gap-x-6" key={field.id}>
-                                        <input className='border rounded-lg p-2 mb-2' type="number" id="phoneNum" {...register(`phoneNum.${index}.number` as const)} />
+                                        <input className='border rounded-lg p-2 mb-2' type="text" id="phoneNum" {...register(`phoneNum.${index}.number` as const, {         valueAsNumber:true, 
+                                        minLength:11, 
+                                        maxLength:11})} />
                                         {
                                             index>0 &&(
                                                 <button className='bg-blue-500 mt-4 px-4 py-2 text-white shadow-lg rounded-lg' type="button" onClick={()=>removePhone(index)}>Remove</button>
@@ -196,9 +198,11 @@ const DynamicForm = () => {
         </div>
         <div className='mb-2'>
             <label className='me-4' htmlFor="state">State:</label>
-            <select id="state" {...register('state')}  className='bg-white p-2 border'>
+            <select id="state" placeholder='USA Only' {...register('state', {
+                disabled: watch('country') !== "USA",
+            })}  className=' p-2 border'>
                 <option value="state1">State 1</option>
-                <option value="state2">State 2</option>
+                <option value="state2">State 2</option> 
             </select>
         </div>
         <div className='mb-2'>
