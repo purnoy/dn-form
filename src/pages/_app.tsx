@@ -20,7 +20,7 @@ export const lobster = Lobster({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className=''>
+    <main className="font-lobster">
       <Component {...pageProps} />
     </main>
   )

@@ -10,8 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily:{
-        lobster: ["Lobster"],
-        great_vibes: ["var(--font-great_vibes)"]
+        lobster: "Lobster",
+        sans: 'Inter',
       }
     },
   },
