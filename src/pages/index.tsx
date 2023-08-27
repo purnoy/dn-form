@@ -1,12 +1,10 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import DynamicForm from '@/components/DynamicForm'
+import Image from 'next/image';
+import DynamicForm from '@/components/DynamicForm';
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-   <div className="flex items-center justify-center">
+   <div className={`flex items-center justify-center `}>
       <DynamicForm/>
    </div>
   )

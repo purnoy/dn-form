@@ -3,6 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import {useForm, useFieldArray} from 'react-hook-form'; 
 import { ErrorMessage } from '@hookform/error-message';
+import { inter, great_vibes, lobster } from '@/pages/_app';
+
 const usernameList = ["purnoy", "zarif", "rasel", "bappy" ];
 
 interface formData {
@@ -96,12 +98,12 @@ const DynamicForm = () => {
 
  
   return (
-    <div className='border p-6 mt-6 rounded-lg w-[600px] bg-yellow-200'>
+    <div className={` border p-6 mt-6 rounded-lg w-[600px] bg-yellow-200`}>
         <h1 className='text-center mb-4 font-bold'>Dynamic Form</h1>
 
         {/* Fullname */}
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div className='flex flex-col mb-2'>
+        <div className={`${great_vibes.className} flex flex-col mb-2`}>
             <label className='font-semibold' htmlFor="fullName">Full Name:</label>
             <input type="text" id="fullName" {...register('fullName', {required:{value:true, message: "Full name is required"},validate:{
                 noAdmin:(fieldValue)=>{
@@ -119,7 +121,7 @@ const DynamicForm = () => {
         </div>
 
         {/* Email Address */}
-        <div className='flex flex-col mb-2'>
+        <div className={`${lobster.className} flex flex-col mb-2`} >
             <label className='font-semibold' htmlFor="email">Email Address:</label>
             <input type="email" id="email" {...register('email',{pattern:{
                 value:  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
@@ -140,7 +142,7 @@ const DynamicForm = () => {
             />
         </div>
 
-
+        {/* Contact Preference  */}
         <div className='flex flex-col mb-2'>
             <label className='font-semibold'> Contact Preference:</label>
             <div>
@@ -258,7 +260,7 @@ const DynamicForm = () => {
         />
         </div>
         <div className='mb-2'>
-            <label className='me-4' htmlFor="zipCode">Zip Code</label>
+            <label className='me-4 font-lobster' htmlFor="zipCode">Zip Code</label>
             <input type="text" id="zipCode" {...register('zipCode')} className='border rounded-lg p-2' />
             <ErrorMessage
             errors={errors}
@@ -267,7 +269,7 @@ const DynamicForm = () => {
         />
         </div>
         <div className='mb-2'>
-            <label className='me-4' htmlFor="state">State:</label>
+            <label className='me-4 font-great_vibes' htmlFor="state">State:</label>
             <select id="state" placeholder='USA Only' {...register('state', {
                 disabled: watch('country') !== "USA",
             })}  className=' p-2 border'>
