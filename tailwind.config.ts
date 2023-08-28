@@ -10,8 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily:{
-        lobster: "Lobster",
-        sans: 'Inter',
+        lobster: ['Lobster', 'cursive'],
+        sans: ['Inter'],
+        lato: ['Lato', 'cursive']
       }
     },
   },

@@ -3,14 +3,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import {useForm, useFieldArray} from 'react-hook-form'; 
 import { ErrorMessage } from '@hookform/error-message';
-import { inter, great_vibes, lobster } from '@/pages/_app';
+import { inter, lobster, great_vibes} from '@/pages/_app';
 
 const usernameList = ["purnoy", "zarif", "rasel", "bappy" ];
 
 interface formData {
     fullName: string;
     email: string;
-    contactPreference: 'email' | 'phone' | 'noPreference';
+    contactPreference: 'email' | 'phone' | 'noPreference'
     phoneNum?:  {number:string}[];
     emailadd?: {exEmail:string}[];
     addressLine1: string;
@@ -121,7 +121,7 @@ const DynamicForm = () => {
         </div>
 
         {/* Email Address */}
-        <div className={`${lobster.className} flex flex-col mb-2`} >
+        <div className={` flex flex-col mb-2`} >
             <label className='font-semibold' htmlFor="email">Email Address:</label>
             <input type="email" id="email" {...register('email',{pattern:{
                 value:  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
@@ -245,7 +245,7 @@ const DynamicForm = () => {
         />
         </div>
        
-        <div className='flex flex-col mb-2'>
+        <div className='font-lato flex flex-col mb-2'>
             <label htmlFor="addressLine2">Address Line 2</label>
             <input type="text" id="addressLine2" {...register('addressLine2')} className='border rounded-lg p-2' />
         </div>
@@ -269,7 +269,7 @@ const DynamicForm = () => {
         />
         </div>
         <div className='mb-2'>
-            <label className='me-4 font-great_vibes' htmlFor="state">State:</label>
+            <label className='me-4 font-lobster' htmlFor="state">State:</label>
             <select id="state" placeholder='USA Only' {...register('state', {
                 disabled: watch('country') !== "USA",
             })}  className=' p-2 border'>
