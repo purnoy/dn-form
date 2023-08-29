@@ -19,6 +19,7 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "ignorePatterns": ["postcss.config.js"],
 
   "exclude": ["node_modules"]
 }
