@@ -1,7 +1,7 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import { Inter, Great_Vibes, Lato } from 'next/font/google';
+import '@/styles/globals.css';
 import LocalFont from '@next/font/local';
+import type { AppProps } from 'next/app';
+import { Great_Vibes, Inter, Lato } from 'next/font/google';
 
 export const inter = Inter({
    subsets: ['latin'] 

@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss'
 
-
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,13 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontFamily:{
+      fontFamily: {
         lobster: ['Lobster', 'cursive'],
         sans: ['Inter'],
         lato: ['Lato', 'cursive']
       }
-    },
+    }
   },
-  plugins: [],
+  plugins: []
 }
 export default config
